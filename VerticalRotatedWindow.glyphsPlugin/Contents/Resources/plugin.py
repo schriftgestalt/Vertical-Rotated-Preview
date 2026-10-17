@@ -27,6 +27,7 @@ from Foundation import NSWidth, NSHeight
 import traceback
 import re
 import objc
+from objc import super
 
 surrogate_pairs = re.compile(u'[\ud800-\udbff][\udc00-\udfff]', re.UNICODE)
 surrogate_start = re.compile(u'[\ud800-\udbff]', re.UNICODE)
@@ -201,7 +202,7 @@ class VerticalRotatedPreviewView(NSView):
 		try:
 			optionKeyPressed = event.modifierFlags() & NSEventModifierFlagOption == NSEventModifierFlagOption
 			if not optionKeyPressed:
-				return NSView.scrollWheel_(self, event)
+				return super().scrollWheel_(self, event)
 
 			deltaY = event.scrollingDeltaY()
 			if deltaY == 0:
