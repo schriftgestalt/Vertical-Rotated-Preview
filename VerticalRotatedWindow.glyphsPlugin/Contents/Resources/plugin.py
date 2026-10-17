@@ -35,13 +35,13 @@ emoji_variation_selector = re.compile(u'[\ufe00-\ufe0f]', re.UNICODE)
 
 
 def is_glyphs_dark_ui():
-    app = NSApp()
-    if app is None:
-        return False
-    match = app.effectiveAppearance().bestMatchFromAppearancesWithNames_(
-        [NSAppearanceNameAqua, NSAppearanceNameDarkAqua]
-    )
-    return match == NSAppearanceNameDarkAqua
+	app = NSApp()
+	if app is None:
+		return False
+	match = app.effectiveAppearance().bestMatchFromAppearancesWithNames_(
+		[NSAppearanceNameAqua, NSAppearanceNameDarkAqua]
+	)
+	return match == NSAppearanceNameDarkAqua
 
 
 class VerticalRotatedPreviewView(NSView):
