@@ -2,10 +2,15 @@
 
 
 from __future__ import print_function, unicode_literals
-from GlyphsApp import Glyphs, UPDATEINTERFACE, DOCUMENTACTIVATED, TABDIDOPEN, TABWILLCLOSE, WINDOW_MENU, LTR, GSControlLayer
+from GlyphsApp import Glyphs, UPDATEINTERFACE, DOCUMENTACTIVATED, TABDIDOPEN, TABWILLCLOSE, WINDOW_MENU, GSControlLayer
+try:
+	from GlyphsApp import GSLTR
+except:
+	from GlyphsApp import LTR as GSLTR
+
 from GlyphsApp.plugins import GeneralPlugin
 import vanilla
-from AppKit import (
+from Cocoa import (
 	NSAffineTransform,
 	NSView,
 	NSScrollView,
@@ -17,10 +22,11 @@ from AppKit import (
 	NSApp, # for checking dark mode
 	NSAppearanceNameAqua, # for checking dark mode
 	NSAppearanceNameDarkAqua # for checking dark mode
-	)
-from Foundation import NSWidth, NSHeight, NSMidX, NSMidY
+)
+from Foundation import NSWidth, NSHeight
 import traceback
-import re, objc
+import re
+import objc
 
 surrogate_pairs = re.compile(u'[\ud800-\udbff][\udc00-\udfff]', re.UNICODE)
 surrogate_start = re.compile(u'[\ud800-\udbff]', re.UNICODE)
@@ -66,7 +72,7 @@ class VerticalRotatedPreviewView(NSView):
 	@objc.python_method
 	def getKernValue(self, layer1, layer2) -> int:
 		if Glyphs.buildNumber > 3000:
-			return int(layer1.nextKerningForLayer_direction_(layer2, LTR))
+			return int(layer1.nextKerningForLayer_direction_(layer2, GSLTR))
 		else:
 			return int(layer1.rightKerningForLayer_(layer2))
 
